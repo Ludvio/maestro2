@@ -1,14 +1,12 @@
 /**
- * GROMADA TELEMETRY SYSTEM
- * Location: src/utils/Telemetry.ts
+ * MAESTRO TELEMETRY ENGINE
  * 
  * Mandate: Provide a unified way to emit systemic signals for health monitoring.
- * Used in Chapter 3.2 of the RFC standard.
  */
 
-type SignalLevel = 'INFO' | 'WARN' | 'ERROR' | 'CRITICAL';
+export type SignalLevel = 'INFO' | 'WARN' | 'ERROR' | 'CRITICAL';
 
-interface Signal {
+export interface Signal {
     phase: string;
     event: string;
     level: SignalLevel;
@@ -48,15 +46,15 @@ class TelemetryEngine {
         }
 
         // Log to console in development
-        const color = this.getLevelColor(level);
-        console.log(
-            `%c[${phase}] %c${event}`,
-            `color: ${color}; font-weight: bold`,
-            'color: inherit',
-            context || ''
-        );
-
-        // Here we could sync to a central monitoring node in Phase 38
+        if (process.env.NODE_ENV !== 'production') {
+            const color = this.getLevelColor(level);
+            console.log(
+                `%c[${phase}] %c${event}`,
+                `color: ${color}; font-weight: bold`,
+                'color: inherit',
+                context || ''
+            );
+        }
     }
 
     private getLevelColor(level: SignalLevel): string {
