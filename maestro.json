@@ -1,0 +1,59 @@
+{
+    "project_name": "Gromada",
+    "version": "2.1.0",
+    "framework": {
+        "ui": "react",
+        "state": "zustand",
+        "style": "tailwind"
+    },
+    "structure": {
+        "pillars": [
+            {
+                "id": "00",
+                "key": "CORE",
+                "name": "Foundation",
+                "path": "docs/domains/00_CORE"
+            },
+            {
+                "id": "01",
+                "key": "HOUSEHOLD",
+                "name": "Gospodarstwo",
+                "path": "docs/domains/01_HOUSEHOLD"
+            },
+            {
+                "id": "02",
+                "key": "MARKET",
+                "name": "Rynek",
+                "path": "docs/domains/02_MARKET"
+            },
+            {
+                "id": "03",
+                "key": "HEARTH",
+                "name": "Ognisko",
+                "path": "docs/domains/03_HEARTH"
+            },
+            {
+                "id": "04",
+                "key": "ASSEMBLY",
+                "name": "Wiec",
+                "path": "docs/domains/04_ASSEMBLY"
+            }
+        ],
+        "naming": "phase_[ID]_[NAME]"
+    },
+    "integrity": {
+        "kpi_thresholds": "docs/system/metrics/KPI_THRESHOLDS.json",
+        "mandatory_layers": [
+            "A",
+            "B",
+            "D",
+            "E",
+            "S",
+            "I",
+            "U",
+            "F",
+            "G",
+            "P"
+        ]
+    }
+}
