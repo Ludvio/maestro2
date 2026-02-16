@@ -1,0 +1,79 @@
+{
+    "_metadata": {
+        "description": "Idempotency Contract Schema. Ensures transaction safety.",
+        "orchestration": "Phase [XX] | Template"
+    },
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "title": "Phase [XX] Idempotency Contract",
+    "description": "Defines the strict rules for all store mutations in this phase. This ensures that every action is idempotent (safe to retry) and validates all inputs.",
+    "type": "object",
+    "properties": {
+        "phase": {
+            "type": "string",
+            "const": "PHASE_[XX]_[NAME]",
+            "description": "The unique identifier of the development phase."
+        },
+        "actions": {
+            "type": "array",
+            "items": {
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string",
+                        "description": "The name of the store action (e.g., 'claimTask')."
+                    },
+                    "description": {
+                        "type": "string",
+                        "description": "What this action does in business terms."
+                    },
+                    "idempotencyKey": {
+                        "type": "string",
+                        "example": "payload.taskId + user.id",
+                        "description": "The unique combination of fields that prevents duplicate execution."
+                    },
+                    "payload": {
+                        "type": "object",
+                        "description": "The EXACT shape of store input required for this action.",
+                        "properties": {
+                            "taskId": {
+                                "type": "string"
+                            },
+                            "amount": {
+                                "type": "number",
+                                "minimum": 1
+                            }
+                        },
+                        "required": [
+                            "taskId",
+                            "amount"
+                        ]
+                    },
+                    "invariants": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        },
+                        "description": "Pre-conditions that MUST be true before the store updates. Example: 'User must not have claimed this task already'."
+                    },
+                    "sideEffects": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        },
+                        "description": "Logs, alerts, or external API calls triggered by this action. Example: 'Emit task_claimed event to WebSocket'."
+                    }
+                },
+                "required": [
+                    "name",
+                    "payload",
+                    "idempotencyKey",
+                    "invariants"
+                ]
+            }
+        }
+    },
+    "required": [
+        "phase",
+        "actions"
+    ]
+}
